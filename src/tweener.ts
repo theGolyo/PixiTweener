@@ -11,12 +11,17 @@ export class Tweener {
         Tweener.ticker.add(Tweener.update);
     }
 
-    public static dispose() {
-        Tweener.ticker = null;
-        Tweener.ticker.remove(Tweener.update);
-        Tweener.tweens = [];
+    public static tweening() {
+        return Tweener.tweens.length > 0;
     }
 
+    public static dispose() {
+        if (Tweener.ticker) {
+            (Tweener.ticker as unknown) = undefined;
+            Tweener.ticker.remove(Tweener.update);
+            Tweener.tweens = [];
+        }
+    }
     
     public static add<T extends P, P extends TweenProps>(
         tweenParams: {
@@ -34,19 +39,19 @@ export class Tweener {
                 duration: tweenParams.duration * 1000,
                 ease: tweenParams.ease || Easing.linear,
                 target: tweenParams.target,
-                delay: tweenParams.delay * 1000 || 0,
+                delay: tweenParams.delay ? tweenParams.delay * 1000 : 0,
                 currentTime: 0,
                 props: props,
                 propDeltas,
                 startingProps,
                 onComplete: resolve,
-                onUpdate: tweenParams.onUpdate || null
+                onUpdate: tweenParams.onUpdate || undefined
             };
             Tweener.tweens.push(tween);
         });
     }
 
-    public static killTweensOf(target: any, completeTweens ?: boolean) {
+    public static killTweensOf(target: any, completeTweens?: boolean) {
         const filteredTweens: Tween<TweenProps, TweenProps>[] = [];
         Tweener.tweens.forEach(tween => {
             if (tween === target) {
@@ -92,7 +97,7 @@ export class Tweener {
 }
 
 interface Tween<T extends P, P extends TweenProps> {
-    ease?: (t: number) => number;
+    ease: (t: number) => number;
     duration: number;
     delay: number;
     currentTime: number;
@@ -101,7 +106,7 @@ interface Tween<T extends P, P extends TweenProps> {
     startingProps: P;
     propDeltas: P;
     onComplete: () => void;
-    onUpdate: (t: number) => void;
+    onUpdate?: (t: number) => void;
 }
 
 interface TweenProps {

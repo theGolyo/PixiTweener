@@ -2,13 +2,24 @@
   "name": "pixi-tweener",
   "version": "0.9.0",
   "description": "Simple tweener for pixi.js",
-  "main": "index.js",
+  "main": "dist/pixi-tweener.js",
   "devDependencies": {
-    "pixi.js": "^5.1.2"
+    "pixi.js": "^5.1.2",
+    "rimraf": "^3.0.0",
+    "ts-loader": "^6.0.4",
+    "typescript": "^3.5.3",
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.7"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
+    "build": "rimraf dist && webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "theGolyo",
-  "license": "ISC"
+  "license": "MIT"
 }
