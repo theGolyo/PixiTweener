@@ -7,8 +7,10 @@ export class Tweener {
     private static update = () => Tweener.advance(Tweener.ticker.elapsedMS);
 
     public static init(ticker: Ticker) {
-        Tweener.ticker = ticker;
-        Tweener.ticker.add(Tweener.update);
+        if (!Tweener.ticker) {
+            Tweener.ticker = ticker;
+            Tweener.ticker.add(Tweener.update);
+        }
     }
 
     public static tweening() {
@@ -51,11 +53,11 @@ export class Tweener {
         });
     }
 
-    public static killTweensOf(target: any, completeTweens?: boolean) {
+    public static killTweensOf(target: any, skipComplete: boolean) {
         const filteredTweens: Tween<TweenProps, TweenProps>[] = [];
         Tweener.tweens.forEach(tween => {
             if (tween === target) {
-                completeTweens && tween.onComplete();
+                !skipComplete && tween.onComplete();
             } else {
                 filteredTweens.push(tween);
             }
