@@ -45,7 +45,7 @@ static add<T extends P, P extends TweenProps>(tweenParams: {
 ### Tweener.killTweensOf
 Stop all tweens on the target, optional parameter to skip fulfilling the promises.
 ```
-static killTweensOf(target: any, skipComplete: boolean): void;
+static killTweensOf(target: any, skipComplete?: boolean): void;
 ```
 ### Tweener.tweening
 Returns true if there are any active tweens.
