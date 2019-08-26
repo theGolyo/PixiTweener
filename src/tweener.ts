@@ -53,7 +53,7 @@ export class Tweener {
         });
     }
 
-    public static killTweensOf(target: any, skipComplete: boolean) {
+    public static killTweensOf(target: any, skipComplete?: boolean) {
         const filteredTweens: Tween<TweenProps, TweenProps>[] = [];
         Tweener.tweens.forEach(tween => {
             if (tween === target) {
