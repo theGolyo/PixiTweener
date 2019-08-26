@@ -4,6 +4,8 @@ A lightweight tweener using Pixi's built in ticker.
 
     npm install pixi-tweener
 
+The library is exposed as an UMD module. If loaded directly with a `<script>` tag, it can be accessed under `pixiTweener.Tweener` and `pixiTweener.Easing`. 
+
 ## Usage
 
 ```
@@ -12,8 +14,8 @@ import { Tweener, Easing } from "pixi-tweener";
 // ...
 
 Tweener.init(app.ticker);
-await Tweener.add({ target: bunnySprite, duration: 3, ease: Easing.easeInOutCubic }, 
-                  { x: 100, alpha: 0.5});
+
+await Tweener.add({ target: bunnySprite, duration: 3, ease: Easing.easeInOutCubic }, { x: 100, alpha: 0.5});
 ```
 
 ## Api
