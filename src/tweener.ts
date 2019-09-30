@@ -28,6 +28,7 @@ export class Tweener {
     public static add<T extends P, P extends TweenProps>(
         tweenParams: {
             target: T,
+            context ?: any,
             duration: number,
             delay?: number,
             ease?: (t: number) => number,
@@ -47,16 +48,17 @@ export class Tweener {
                 propDeltas,
                 startingProps,
                 onComplete: resolve,
-                onUpdate: tweenParams.onUpdate || undefined
+                onUpdate: tweenParams.onUpdate || undefined,
+                context: tweenParams.context || target
             };
             Tweener.tweens.push(tween);
         });
     }
 
-    public static killTweensOf(target: any, skipComplete?: boolean) {
+    public static killTweensOf(context: any, skipComplete?: boolean) {
         const filteredTweens: Tween<TweenProps, TweenProps>[] = [];
         Tweener.tweens.forEach(tween => {
-            if (tween === target) {
+            if (tween.context === context || tween.target === context) {
                 !skipComplete && tween.onComplete();
             } else {
                 filteredTweens.push(tween);
@@ -73,7 +75,7 @@ export class Tweener {
                 if (tween.delay <= 0) {
                     elapsedMS = -tween.delay;
                 } else {
-                    return;
+                    continue;
                 }
             }
 
@@ -104,6 +106,7 @@ interface Tween<T extends P, P extends TweenProps> {
     delay: number;
     currentTime: number;
     target: T;
+    context: any;
     props: P;
     startingProps: P;
     propDeltas: P;

@@ -37,6 +37,7 @@ Adds a new tween to the tweener, returns a promise that fulfills when the tween 
 ```
 static add<T extends P, P extends TweenProps>(tweenParams: {
         target: T;
+        context?: any;
         duration: number;
         delay?: number;
         ease?: (t: number) => number;
@@ -45,9 +46,9 @@ static add<T extends P, P extends TweenProps>(tweenParams: {
 ```
 
 ### Tweener.killTweensOf
-Stop all tweens on the target, optional parameter to skip fulfilling the promises.
+Stop all tweens on the target context, optional parameter to skip fulfilling the promises. Context can be any object used in the creation of the tween, that can be shared by multiple tweens. By default it is the target of the tween.
 ```
-static killTweensOf(target: any, skipComplete?: boolean): void;
+static killTweensOf(context: any, skipComplete?: boolean) 
 ```
 ### Tweener.tweening
 Returns true if there are any active tweens.
