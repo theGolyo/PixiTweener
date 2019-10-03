@@ -70,16 +70,17 @@ export class Tweener {
     private static advance(elapsedMS: number) {
         let hasCompletedTween = false;
         for (const tween of Tweener.tweens) {
+            let tweenElapsedMS = elapsedMS;
             if (tween.delay > 0) {
-                tween.delay -= elapsedMS;
+                tween.delay -= tweenElapsedMS;
                 if (tween.delay <= 0) {
-                    elapsedMS = -tween.delay;
+                    tweenElapsedMS = -tween.delay;
                 } else {
                     continue;
                 }
             }
 
-            tween.currentTime += elapsedMS;
+            tween.currentTime += tweenElapsedMS;
             const t = Math.min(1, tween.currentTime / tween.duration);
             const propDelta = tween.ease(t);
             for (const key of Object.keys(tween.props)) {

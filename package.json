@@ -1,13 +1,19 @@
 {
   "name": "pixi-tweener",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "Simple tweener for pixi.js, with promises",
   "main": "dist/pixi-tweener.js",
   "devDependencies": {
+    "@types/jest": "^24.0.18",
+    "canvas": "^2.6.0",
+    "jest": "^24.9.0",
+    "jest-environment-jsdom-fourteen": "^0.1.0",
+    "jest-webgl-canvas-mock": "^0.2.2",
     "pixi.js": "^5.1.2",
     "rimraf": "^3.0.0",
+    "ts-jest": "^24.1.0",
     "ts-loader": "^6.0.4",
-    "typescript": "^3.5.3",
+    "typescript": "^3.6.3",
     "webpack": "^4.39.2",
     "webpack-cli": "^3.3.7"
   },
@@ -29,7 +35,7 @@
   ],
   "scripts": {
     "build": "rimraf dist && webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "theGolyo",
   "license": "MIT"
