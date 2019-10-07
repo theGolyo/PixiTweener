@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
-        "lib": ["es6"],
+        "lib": ["es6", "dom"],
         "declaration": true,
         "strict": true,
-        "outDir": "dist",
+        "outDir": "dist"
     }
 }
