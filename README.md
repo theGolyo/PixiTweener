@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/theGolyo/PixiTweener.svg?style=svg)](https://circleci.com/gh/theGolyo/PixiTweener)
+
 A lightweight tweener using Pixi's built in ticker.
 
 ## Installation
