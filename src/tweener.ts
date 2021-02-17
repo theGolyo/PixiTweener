@@ -6,7 +6,7 @@ export class Tweener {
     private static tweens: Tween<TweenProps, TweenProps>[] = [];
     private static update = () => Tweener.advance(Tweener.ticker.elapsedMS);
 
-    public static init(ticker: Ticker) {
+    public static init(ticker: any) {
         if (!Tweener.ticker) {
             Tweener.ticker = ticker;
             Tweener.ticker.add(Tweener.update);
@@ -19,8 +19,8 @@ export class Tweener {
 
     public static dispose() {
         if (Tweener.ticker) {
-            (Tweener.ticker as unknown) = undefined;
             Tweener.ticker.remove(Tweener.update);
+            (Tweener.ticker as unknown) = undefined;
             Tweener.tweens = [];
         }
     }
