@@ -30,6 +30,7 @@ export class Tweener {
             target: T,
             context ?: any,
             duration: number,
+            useTickForDuration?: boolean;
             delay?: number,
             ease?: (t: number) => number,
             onUpdate?: (t: number) => void
@@ -37,9 +38,11 @@ export class Tweener {
         const target = tweenParams.target;
         const startingProps = Object.assign({}, ...Object.keys(props).map(key => ({ [key]: target[key] })));
         const propDeltas = Object.assign({}, ...Object.keys(props).map(key => ({ [key]: props[key] - startingProps[key] })));
+        const duration = tweenParams.useTickForDuration ? tweenParams.duration : tweenParams.duration * 1000;
         return new Promise<void>(resolve => {
             const tween = {
-                duration: tweenParams.duration * 1000,
+                duration,
+                useTickForDuration: tweenParams.useTickForDuration ? true : false,
                 ease: tweenParams.ease || Easing.linear,
                 target: tweenParams.target,
                 delay: tweenParams.delay ? tweenParams.delay * 1000 : 0,
@@ -70,17 +73,18 @@ export class Tweener {
     private static advance(elapsedMS: number) {
         let hasCompletedTween = false;
         for (const tween of Tweener.tweens) {
-            let tweenElapsedMS = elapsedMS;
+            // if tick count is used for tweening, each update call moved everything by 1 tick
+            let elapsed = tween.useTickForDuration ? 1 : elapsedMS;
             if (tween.delay > 0) {
-                tween.delay -= tweenElapsedMS;
+                tween.delay -= elapsed;
                 if (tween.delay <= 0) {
-                    tweenElapsedMS = -tween.delay;
+                    elapsed = -tween.delay;
                 } else {
                     continue;
                 }
             }
 
-            tween.currentTime += tweenElapsedMS;
+            tween.currentTime += elapsed;
             const t = Math.min(1, tween.currentTime / tween.duration);
             const propDelta = tween.ease(t);
             for (const key of Object.keys(tween.props)) {
@@ -103,6 +107,7 @@ export class Tweener {
 
 interface Tween<T extends P, P extends TweenProps> {
     ease: (t: number) => number;
+    useTickForDuration: boolean;
     duration: number;
     delay: number;
     currentTime: number;

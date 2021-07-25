@@ -1,6 +1,6 @@
 {
   "name": "pixi-tweener",
-  "version": "0.11.0",
+  "version": "0.12.1",
   "description": "Simple tweener for pixi.js, with promises",
   "main": "dist/pixi-tweener.js",
   "devDependencies": {

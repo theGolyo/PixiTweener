@@ -35,11 +35,12 @@ static dispose(): void;
 Unregisters the tweener from the ticker.
 
 ### Tweener.add
-Adds a new tween to the tweener, returns a promise that fulfills when the tween completes. Tweens start automatically.
+Adds a new tween to the tweener, returns a promise that fulfills when the tween completes. Tweens start automatically. For duration you can either use seconds, or total tick count. Default is seconds.
 ```
 static add<T extends P, P extends TweenProps>(tweenParams: {
         target: T;
         context?: any;
+        useTickForDuration?: boolean;
         duration: number;
         delay?: number;
         ease?: (t: number) => number;
